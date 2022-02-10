@@ -11,9 +11,12 @@ To-Do:
 '''
 
 def train_model(model_name):
+    model_name = model_name.lower()
+    
     if model_name == "sepformer":
         pass
     elif model_name == "convtasnet":
+        #we might call the training script here, the config would be the tricky part
         pass
     elif model_name == "demucs":
         pass

@@ -18,6 +18,21 @@ TO-Do:
 - Create new folder for each results, for example root+model_name+split+window_size
 """
 
+"""
+For latency estimation, try torch profiler
+
+import torch
+import torchvision.models as models
+
+model = models.densenet121(pretrained=True)
+x = torch.randn((1, 3, 224, 224), requires_grad=True)
+
+with torch.autograd.profiler.profile(use_cuda=True) as prof:
+    model(x)
+print(prof) 
+
+"""
+
 
 def compute_metrics(str: root_pth):
     res_dict = {
@@ -64,7 +79,7 @@ def compute_metrics(str: root_pth):
     return res_dict
 
 
-def evaluate_model_astroid(str: root_pth, str: audio_pth, str: save_pth, str: model_type, model):
+def evaluate_model_astroid(root_pth, audio_pth, save_pth, model_type, model):
     
     if not os.path.exists(save_pth):
         os.makedirs(save_pth)

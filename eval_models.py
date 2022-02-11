@@ -34,7 +34,7 @@ print(prof)
 """
 
 
-def compute_metrics(root_pth):
+def compute_metrics(root_pth, save_pth):
     res_dict = {
       'input_pesq': 0.0,
       'input_sar': 0.0,

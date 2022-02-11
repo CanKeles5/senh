@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import torchaudio
 import os
+import utils
 from scipy.io import wavfile
 from asteroid.metrics import get_metrics
 
@@ -56,9 +57,9 @@ def compute_metrics(root_pth, save_pth):
 
     for mix_path, clean_path, res_path in zip(sorted(mix_paths), sorted(clean_paths), sorted(res_paths)):
       #compute metrics here
-      mix = open_audio(mix_path)
-      clean = open_audio(clean_path)
-      est = open_audio(res_path)
+      mix = utils.open_audio(mix_path)
+      clean = utils.open_audio(clean_path)
+      est = utils.open_audio(res_path)
 
       min_len = min(mix.shape[0], clean.shape[0], est.shape[0])
       mix = np.expand_dims(mix[0: min_len], axis=0) / 32768.0

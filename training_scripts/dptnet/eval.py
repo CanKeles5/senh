@@ -5,17 +5,16 @@ import torch
 import yaml
 import json
 import argparse
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from pprint import pprint
 
+from asteroid import DPTNet
 from asteroid.metrics import get_metrics
 from asteroid.losses import PITLossWrapper, pairwise_neg_sisdr
 from asteroid.data.wham_dataset import WhamDataset
-from asteroid.models import ConvTasNet
-from asteroid.utils import tensors_to_device
 from asteroid.models import save_publishable
+from asteroid.utils import tensors_to_device
 
 
 parser = argparse.ArgumentParser()
@@ -41,7 +40,7 @@ compute_metrics = ["si_sdr", "sdr", "sir", "sar", "stoi"]
 
 def main(conf):
     model_path = os.path.join(conf["exp_dir"], "best_model.pth")
-    model = ConvTasNet.from_pretrained(model_path)
+    model = DPTNet.from_pretrained(model_path)
     # Handle device placement
     if conf["use_gpu"]:
         model.cuda()
@@ -94,7 +93,6 @@ def main(conf):
             for src_idx, src in enumerate(sources_np):
                 sf.write(local_save_dir + "s{}.wav".format(src_idx + 1), src, conf["sample_rate"])
             for src_idx, est_src in enumerate(est_sources_np):
-                est_src *= np.max(np.abs(mix_np)) / np.max(np.abs(est_src))
                 sf.write(
                     local_save_dir + "s{}_estimate.wav".format(src_idx + 1),
                     est_src,
@@ -119,9 +117,8 @@ def main(conf):
     pprint(final_results)
     with open(os.path.join(conf["exp_dir"], "final_metrics.json"), "w") as f:
         json.dump(final_results, f, indent=0)
-
     model_dict = torch.load(model_path, map_location="cpu")
-    os.makedirs(os.path.join(conf["exp_dir"], "publish_dir"), exist_ok=True)
+
     publishable = save_publishable(
         os.path.join(conf["exp_dir"], "publish_dir"),
         model_dict,

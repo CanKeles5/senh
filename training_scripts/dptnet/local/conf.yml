@@ -35,10 +35,10 @@ scheduler:
   d_model: 64
 # Data config
 data:
-  train_dir: data/wav8k/min/tr/
-  valid_dir: data/wav8k/min/cv/
+  train_dir: wav16k/min/tr/
+  valid_dir: wav16k/min/cv/
   task: sep_clean
   nondefault_nsrc:
-  sample_rate: 8000
+  sample_rate: 16000
   mode: min
   segment: 2.0

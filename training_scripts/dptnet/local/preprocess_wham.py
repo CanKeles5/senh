@@ -22,14 +22,14 @@ def preprocess_one_dir(in_dir, out_dir, out_filename):
         json.dump(file_infos, f, indent=4)
 
 
-def preprocess(inp_args):
+def preprocess(in_dir, out_dir):
     """ Create .json files for all conditions."""
-    speaker_list = ["mix_both", "mix_clean", "mix_single", "s1", "s2", "noise"]
+    speaker_list = ["mix_clean", "s1", "s2", "noise"]
     for data_type in ["tr", "cv", "tt"]:
         for spk in speaker_list:
             preprocess_one_dir(
-                os.path.join(inp_args.in_dir, data_type, spk),
-                os.path.join(inp_args.out_dir, data_type),
+                os.path.join(in_dir, data_type, spk),
+                os.path.join(out_dir, data_type),
                 spk,
             )
 
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     print(args)
-    preprocess(args)
+    preprocess(in_dir="wav16k/min", out_dir="wav16k/min")

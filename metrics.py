@@ -10,7 +10,9 @@ import numpy as np
 import math
 import speechbrain
 import scipy.io
-from pb_bss_eval import OutputMetrics
+#from pb_bss_eval import OutputMetrics
+from asteroid.metrics import get_metrics
+
 
 
 SAMPLE_RATE = 16000

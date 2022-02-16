@@ -5,7 +5,7 @@ import torchaudio
 import os
 import utils
 from scipy.io import wavfile
-from asteroid.metrics import get_metrics
+from metrics import compute_metrics_bsseval
 
 
 window_sizes = ["full"]
@@ -33,51 +33,6 @@ with torch.autograd.profiler.profile(use_cuda=True) as prof:
 print(prof) 
 
 """
-
-
-def compute_metrics(root_pth, save_pth):
-    res_dict = {
-      'input_pesq': 0.0,
-      'input_sar': 0.0,
-      'input_sdr': 0.0,
-      'input_si_sdr': 0.0,
-      'input_sir': 0.0,
-      'input_stoi': 0.0,
-      'pesq': 0.0,
-      'sar': 0.0,
-      'sdr': 0.0,
-      'si_sdr': 0.0,
-      'sir': 0.0,
-      'stoi': 0.0
-    }
-    
-    mix_paths = glob.glob(root_pth + "/mix/*.wav")
-    clean_paths = glob.glob(root_pth + "/clean/*.wav") #Re factor this path
-    res_paths = glob.glob(save_pth + "/*.wav")
-
-    for mix_path, clean_path, res_path in zip(sorted(mix_paths), sorted(clean_paths), sorted(res_paths)):
-      #compute metrics here
-      mix = utils.open_audio(mix_path)
-      clean = utils.open_audio(clean_path)
-      est = utils.open_audio(res_path)
-
-      min_len = min(mix.shape[0], clean.shape[0], est.shape[0])
-      mix = np.expand_dims(mix[0: min_len], axis=0) / 32768.0
-      mix = np.clip(np.where(np.isnan(mix), 0, mix), 0, 1)
-
-      clean = np.expand_dims(clean[0: min_len], axis=0) / 32768.0
-      clean = np.clip(np.where(np.isnan(clean), 0, clean), 0, 1)
-
-      est = np.expand_dims(est[0: min_len], axis=0)
-      est = np.clip(np.where(np.isnan(est), 0, est), 0, 1)
-
-      metrics_dict = get_metrics(mix, clean, est, sample_rate=SAMPLING_RATE, metrics_list='all')
-
-      for key in res_dict:
-        res_dict[key] += metrics_dict[key]
-
-    #pprint.pprint(res_dict)
-    return res_dict
 
 
 def evaluate_model(root_pth, audio_pth, save_pth, model_type, model):
@@ -117,5 +72,5 @@ def evaluate_model(root_pth, audio_pth, save_pth, model_type, model):
             wavfile.write(res_path, SAMPLING_RATE, res[0].astype(np.float32))
             audio_index += 1
     
-    return compute_metrics(root_pth)
+    return compute_metrics_bsseval(root_pth)
 

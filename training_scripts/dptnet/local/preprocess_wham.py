@@ -24,7 +24,7 @@ def preprocess_one_dir(in_dir, out_dir, out_filename):
 
 def preprocess(in_dir, out_dir):
     """ Create .json files for all conditions."""
-    speaker_list = ["mix_clean", "s1", "s2", "noise"]
+    speaker_list = ["mix_single", "s1", "s2", "noise"]
     for data_type in ["tr", "cv", "tt"]:
         for spk in speaker_list:
             preprocess_one_dir(

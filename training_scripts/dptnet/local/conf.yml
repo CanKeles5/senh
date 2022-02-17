@@ -37,7 +37,7 @@ scheduler:
 data:
   train_dir: wav16k/min/tr/
   valid_dir: wav16k/min/cv/
-  task: sep_clean
+  task: enh_single
   nondefault_nsrc:
   sample_rate: 16000
   mode: min

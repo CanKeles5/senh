@@ -2,11 +2,7 @@
 Script to train models from different frameworks
 
 To-Do:
-- Train ConvTasNet (Asteroid)
-    - Add option to load model & fine tune
-
-- Train DPTNet (Asteroid)
-
+- Maybe the train_model should be a class ?
 - Train Demucs (Demucs repo)
 
 - Train SSE (self-supervised senh)

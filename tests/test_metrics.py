@@ -1,10 +1,3 @@
-'''
-Unit testing metrics
-
-To-Do:
-    - Add test cases
-'''
-
 import numpy as np
 import math
 import unittest

@@ -14,9 +14,7 @@ import scipy.io
 from asteroid.metrics import get_metrics
 
 
-
 SAMPLE_RATE = 16000
-
 
 
 def get_mask(source, source_lengths):
@@ -191,8 +189,7 @@ def compute_metrics_bsseval(root_pth, save_pth):
 
       for key in res_dict:
         res_dict[key] += metrics_dict[key]
-
-    #pprint.pprint(res_dict)
+    
     return res_dict
 
 

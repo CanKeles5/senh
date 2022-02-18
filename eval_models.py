@@ -13,7 +13,6 @@ SAMPLING_RATE = 16000
 
 """
 TO-Do:
-- Move the compute metrics to the metrics file & use pb_bss_eval metrics if possible
 - Test all models.
 - Add model options to download
 - Create new folder for each results, for example root+model_name+split+window_size

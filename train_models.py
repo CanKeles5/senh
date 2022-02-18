@@ -34,7 +34,7 @@ def train_model(model_name: str):
         pass
     elif model_name == "custom": #Should provide model somehow, maybe in custom_model.py
         pass
-    else
+    else:
         print(f"Error: model '{model_name}' not defined.")
     pass
     

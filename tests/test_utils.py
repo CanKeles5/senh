@@ -6,7 +6,7 @@ import unittest
 import utils
 
 
-class TestUtils(unittest.TestCase):
+class test_utils(unittest.TestCase):
     def test_convert_to_int16(self):
         pass
         data = [1, 2, 3]

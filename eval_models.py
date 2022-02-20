@@ -13,8 +13,6 @@ SAMPLING_RATE = 16000
 
 """
 TO-Do:
-- Test all models.
-- Add model options to download
 - Create new folder for each results, for example root+model_name+split+window_size
 """
 
@@ -34,7 +32,7 @@ print(prof)
 """
 
 
-def evaluate_model(root_pth, audio_pth, save_pth, model_type, model):
+def evaluate_model(root_pth, audio_pth, save_pth, model_type, model, device="cpu"):
     
     if not os.path.exists(save_pth):
         os.makedirs(save_pth)
@@ -49,7 +47,7 @@ def evaluate_model(root_pth, audio_pth, save_pth, model_type, model):
             if model_type == "asteroid":
                 res = np.array([[]])
             else:
-                res = torch.Tensor(1, 1).to('cuda')
+                res = torch.Tensor(1, 1).to(device)
             
             if window_size == "full":
               res = model.numpy_separate(audio)[0]

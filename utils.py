@@ -155,8 +155,6 @@ def add_noise_wave(source, noise, factor=1.0):
 
 def add_reverb(audio, sample_rate, room_size=0.25):
     
-    room_size= 0.25
-    
     board = Pedalboard([
         Reverb(room_size=room_size),
     ], sample_rate=sample_rate)
@@ -244,7 +242,7 @@ def build_dataset(speaker_folder: str, noise_folder: str, options: dict, generat
     add_augmentations(speakers_pth="D:\SpeechSeperationData\chunks", noise_pth=r"D:\whamr\wham_noise\wham_noise\cv", options=options)
 
 
-def build_whamr_like_dataset(speakers_path, wham_noise_path, output_root):
+def build_whamr_like_dataset(speakers_path, wham_noise_path, output_root, snr_high=12.0, snr_low=-3.0, room_size=0.25):
         SINGLE_DIR = 'mix_single'
         BOTH_DIR = 'mix_both'
         CLEAN_DIR = 'mix_clean'
@@ -283,7 +281,7 @@ def build_whamr_like_dataset(speakers_path, wham_noise_path, output_root):
                 
                 s1_anechoic = s1
                 rand_room_size = random.uniform(0.05, 1.0)
-                s1_reverb = add_reverb(s1_anechoic, SAMPLING_RATE)
+                s1_reverb = add_reverb(s1_anechoic, SAMPLING_RATE, room_size=room_size)
                 mix_single = s1_reverb
                 
                 s2 = s1
@@ -301,7 +299,7 @@ def build_whamr_like_dataset(speakers_path, wham_noise_path, output_root):
                             mix_clean = source_pair[0]
                             
                             #mix_single = mix_both = add_noise(source_pair[0], noise_samples, factor=rand_mix_factor) #add_noise_SB(source_pair[0], noise_samples)
-                            mix_single, noise_samples =  add_noise_SB(source_pair[0], noise_samples)
+                            mix_single, noise_samples =  add_noise_SB(source_pair[0], noise_samples, snr_high=12.0, snr_low=-3.0)
                             mix_both = mix_single
                             #min_len = min(source_pair[0].shape, noise_samples.shape)[0]                            
                             
